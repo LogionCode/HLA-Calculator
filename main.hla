@@ -1,0 +1,58 @@
+program calculator;
+#include ("stdlib.hhf");
+
+static
+	wybor: INT8 := 1;
+	
+begin calculator;
+	stdout.put("Kalkulator rozpoczyna prace", nl);
+	
+	while(wybor != 0) do
+		stdout.newln();
+		stdout.put("Prosze wybrac opcje:", nl);
+		stdout.put("Dodawanie - 1", nl);
+		stdout.put("Odejmowanie - 2", nl);
+		stdout.put("Mnozenie - 3", nl);
+		stdout.put("Dzielenie - 4", nl);
+		stdout.put("Aby zakonczyc dzialanie - 0", nl);
+		
+		stdin.get(wybor);
+		if(wybor < 0 || wybor > 4) then
+			stdout.put("Bledna dana!", nl);
+		else
+			stdout.put("Podaj pierwsza liczbe: ");
+			stdin.geti16();
+			mov(AX, BX);
+			stdout.put("Podaj druga liczbe: ");
+			stdin.geti16();
+			
+			if(wybor == 1 || wybor == 2) then
+				if(wybor == 1) then
+					add(AX, BX);
+					stdout.put("Wynik dodawania to: ");
+				else
+					sub(AX, BX);
+					stdout.put("Wynik odejmowania to: ");
+				endif;
+				
+				stdout.puti16(BX);
+				stdout.newln();
+			else
+				if(wybor == 3) then
+					imul(BX, AX);
+					stdout.put("Wynik mnozenia to: ");
+				stdout.puti32(EAX);
+				else
+					movsx(AX, EAX);
+					idiv(BX);
+					stdout.put("Wynik dzielenia to: ");
+					stdout.puti16(AX);
+				endif;
+				
+				stdout.newln();
+			endif;
+			
+				
+		endif;
+	endwhile;
+end calculator;
